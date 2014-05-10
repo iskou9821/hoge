@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>EaselJsのサンプル</title>
+	<script type='text/javascript' src='./lib/easeljs-0.7.1.min.js'></script>
+	<script type='text/javascript' src='./lib/jquery-1.11.1.min.js'></script>
+	<script type='text/javascript' src='./lib/knockout-3.1.0.js'></script>
+	
+	<script type="text/javascript"> 
+		$(function(){
+			//キャンバスの準備(easelJS)
+			var _canvas = $('#mainCanvas');
+			var _stage = new createjs.Stage(_canvas[0]);
+			var _circle = new createjs.Shape();
+			_stage.addChild(_circle);
+			
+			//入力の準備(knockoutJS)
+			var inputViewModel = {
+				circleX:ko.observable(_canvas.width() >> 1),
+				circleY:ko.observable(_canvas.height() >> 1),
+				circleSize:ko.observable(50),
+				circleColor:ko.observable('#FF0000')
+			};
+			ko.applyBindings(inputViewModel);
+			
+			//円の描画
+			var drawCircle = function(c, x, y, size, color) {
+				c.graphics.beginFill(color);
+				c.graphics.drawCircle(0, 0, size);
+				c.graphics.endFill();
+				
+				c.x = x;
+				c.y = y;
+				
+				_stage.update();
+			};
+			
+			//イベントハンドラ
+			$('#updButton').click(function(event){
+				drawCircle(_circle, 
+					inputViewModel.circleX(), 
+					inputViewModel.circleY(), 
+					inputViewModel.circleSize(),
+					inputViewModel.circleColor());
+			});
+			
+			$('#updButton').click();
+		});
+	</script>
+</head>
+<body>
+	<div>
+		キャンバスに描画するテスト
+	</div>
+	X座標<input type='text' data-bind='value:circleX' />
+	Y座標<input type='text' data-bind='value:circleY' />
+	サイズ<input type='text' data-bind='value:circleSize' />
+	色<input type='text' data-bind='value:circleColor' />
+	<div>
+		<input id='updButton' type='button' value='更新' style='width:300px'/>
+	</div>
+	<canvas id="mainCanvas" width="640" height="480">
+		hoge
+	</canvas>
+</body>
+</html>
