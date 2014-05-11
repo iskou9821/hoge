@@ -16,16 +16,23 @@
 			_stage.addChild(_circle);
 			
 			//入力の準備(knockoutJS)
-			var inputViewModel = {
+			var TestViewModel = function(){
+				var F = function(){};
+				F.prototype = TestViewModel.prototype;
+				return new F;
+			}
+			TestViewModel.prototype = {
 				circleX:ko.observable(_canvas.width() >> 1),
 				circleY:ko.observable(_canvas.height() >> 1),
 				circleSize:ko.observable(50),
-				circleColor:ko.observable('#FF0000')
-			};
+				circleColor:ko.observable('#FF0000')				
+			}
+			var inputViewModel = TestViewModel();
 			ko.applyBindings(inputViewModel);
 			
 			//円の描画
 			var drawCircle = function(c, x, y, size, color) {
+				c.graphics.clear();
 				c.graphics.beginFill(color);
 				c.graphics.drawCircle(0, 0, size);
 				c.graphics.endFill();
