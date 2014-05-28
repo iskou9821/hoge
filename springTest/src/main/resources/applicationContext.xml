@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+  "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="hoge" class="local.iskou9821.spring.sample.bean.HogeBean">
+		<property name="msg">
+			<value>ほげほげ</value>
+		</property>
+	</bean>
+</beans>
