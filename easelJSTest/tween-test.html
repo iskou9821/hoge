@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>TweenJSのテスト</title>
+		<script type='text/javascript' src='../lib/easeljs-0.7.1.min.js'></script>
+		<script type='text/javascript' src='../lib/tweenjs-0.5.1.min.js'></script>
+		<script type='text/javascript' src='../lib/jquery-1.11.1.min.js'></script>
+		<script type'text/javascript'>//<![CDATA[
+			$(function(){
+				var _canvas;
+				var _stage;
+				var _rect;
+				
+				_canvas = $('#mainCanvas');
+				_stage = new createjs.Stage(_canvas[0]);
+				_rect = new createjs.Shape();
+				
+				_rect.graphics.beginFill('#FF0000');
+				_rect.graphics.drawRect(-25, -25, 50, 50);
+				_rect.graphics.endFill();
+				
+				_rect.x = _canvas.width() >> 1;
+				_rect.y = _canvas.height() >> 1;
+				
+				_stage.addChild(_rect);
+				_stage.update();
+				
+				createjs.Ticker.setFPS(30);
+				createjs.Ticker.addEventListener('tick', function(){
+					_stage.update();
+				});
+				
+				//_rect.id ='r';
+				var tween = createjs.Tween.get(_rect, {loop:true});
+				tween.to({rotation:360}, 2000, createjs.Ease.liner);
+			});
+		//]]></script>
+	</head>
+	<body>
+		<canvas id='mainCanvas' witdh='640' height='480'>
+			キャンバスです。	
+		</canvas>
+	</body>
+</html>
