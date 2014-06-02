@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+		<title>EmberJSのテスト(2)</title>
+		
+		<meta charset='utf-8' />
+		<script type='text/javascript' src='./lib/jquery-1.10.2.js'></script>
+		<script type='text/javascript' src='./lib/handlebars-1.1.2.js'></script>
+		<script type='text/javascript' src='./lib/ember-1.5.1.js'></script>
+		
+		<script type='text/javascript'>
+		$(function(){
+			window.EmberApp = Ember.Application.create();
+			
+			EmberApp.Router.map(function(){
+				this.route("hoge");
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<!-- 一番初めの画面 -->
+		<script type='text/x-handlebars' data-template-name='index'>
+			<h1>初めのページ</h1>
+			<!-- リンクが作られるが、画面遷移時にページが変わらないという点が重要。 -->
+			<div> {{#link-to 'hoge'}}hogeへ{{/link-to}} </div>
+		</script>
+		
+		<!-- 二番目の画面 -->
+		<script type='text/x-handlebars' data-template-name='hoge'>
+			<h1>hoge</h1>
+			<div> {{#link-to 'index'}}indexへ{{/link-to}} </div>
+		</script>
+	</body>
+</html>

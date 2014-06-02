@@ -1,3 +1,6 @@
+#Ignore bower_components
+bower_components/
+
 # Ignore bundler config.
 /.bundle
 

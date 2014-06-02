@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
+<html>
+	<head>
+		<title>emberJSのテスト</title>
+		<meta charset='utf-8' />
+		<script type='text/javascript' src='./lib/jquery-1.10.2.js'></script>
+		<script type='text/javascript' src='./lib/handlebars-1.1.2.js'></script>
+		<script type='text/javascript' src='./lib/ember-1.5.1.js'></script>
+		
+		<script type='text/javascript'>
+		$(function(){
+			window.EmberApp = Ember.Application.create();
+			
+			window.EmberApp.HogeView = Ember.View.extend({
+				//テンプレート名
+				templateName : 'hoge',
+				
+				//プロパティ
+				hoge : 'ほげほげ',
+				hoges:[
+					{name : 'ほげ', value : 'hoge-hoge'},
+					{name : 'ぴよ', value : 'piyo-piyo'},
+				],
+				clickedElem:'',
+				
+				//イベント
+				didInsertElement : function(){
+					//ビューが読み込まれたとき
+					console.log('loaded now！');
+				},
+				click:function(event) {
+					//ビューがクリックされたとき
+					if (event.target == null) return;
+					
+					//バインディングされている変数を更新
+					//( * 本当はViewではなくコントローラを定義して、そちらに持たせた方がよい)
+					this.set('clickedElem',
+						event.target.tagName + ' - ' + $(event.target).text());
+				}
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<script type='text/x-handlebars' data-template-name='hoge'>
+			<div>シンプルな値の埋め込み。</div>
+			<div>{{view.hoge}}</div>
+			<br/>
+			
+			<div>繰り返し</div>
+			<div>
+				<table border>
+					{{#each view.hoges}}
+					<tr>
+						<td>{{name}}</td>
+						<td>{{value}}</td>
+					</tr>
+					{{/each}}
+				<table>
+			</div>
+			<br/>
+			
+			<!-- バインディングの確認 -->
+			<div>
+				クリックした要素:{{view.clickedElem}}
+			</div>
+		</script>
+
+		<!-- 一番初めに表示される画面→「index」というテンプレート名で固定 -->
+		<script type='text/x-handlebars' data-template-name='index'>
+			{{view EmberApp.HogeView}}
+		</script>
+	</body>
+</html>
