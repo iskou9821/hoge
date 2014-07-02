@@ -1,8 +1,8 @@
 package local.iskou9821.spring.sample.bean;
 
-public class HogeBean {
+public class PiyoBean {
 	private String msg;
-	
+
 	public String getMsg() {
 		return msg;
 	}
@@ -10,5 +10,4 @@ public class HogeBean {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	
 }
