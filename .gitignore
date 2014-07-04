@@ -1,6 +1,9 @@
 #Ignore bower_components
 bower_components/
 
+#Ignore web-inf/lib
+*/WebContent/WEB-INF/lib/
+
 # Ignore bundler config.
 /.bundle
 

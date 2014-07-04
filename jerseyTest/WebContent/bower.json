@@ -1,0 +1,29 @@
+{
+  "name": "jersey-ember",
+  "version": "0.0.0",
+  "homepage": "https://github.com/iskou9821/hoge",
+  "authors": [
+    "iskou9821 <kou.ishikawa@gmail.com>"
+  ],
+  "description": "jersey and ember-data",
+  "main": "index.html",
+  "keywords": [
+    "java",
+    "jersey",
+    "ember"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "ember": "~1.5.1",
+    "ember-data": "~1.0.0-beta.8",
+    "ember-list-view": "~0.0.4"
+  }
+}
