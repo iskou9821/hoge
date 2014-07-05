@@ -1,15 +1,66 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+	<meta charset="UTF-8"/>
 		<title>グリッドシステムのテスト</title>
 		
 		<!-- BootStrap -->
 		<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
 		<script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-		
 		
 	</head>
 	<body>
-		
+		<div class="container">
+			<div class="row">
+				<!-- ブラウザを縮小していくと 6 → 3 → 2 と段組が変わる -->
+				<div class="col-sm-6 col-md-4 col-lg-2">ほげ</div>
+				<div class="col-sm-6 col-md-4 col-lg-2">ほげ</div>
+				<div class="col-sm-6 col-md-4 col-lg-2">ほげ</div>
+				<div class="col-sm-6 col-md-4 col-lg-2">ほげ</div>
+				<div class="col-sm-6 col-md-4 col-lg-2">ほげ</div>
+				<div class="col-sm-6 col-md-4 col-lg-2">ほげ</div>
+			</div>
+			<div class="row">
+				<!-- ブラウザの大きさによる表示・非表示切り替え -->
+				<div class="col-xs-12 visible-xs"> XSで表示 </div>
+				<div class="col-sm-6 visible-sm"> SMで表示 </div>
+				<div class="col-sm-6 visible-sm"> SMで表示 </div>
+				<div class="col-md-4 visible-md"> MDで表示 </div>
+				<div class="col-md-4 visible-md"> MDで表示 </div>
+				<div class="col-md-4 visible-md"> MDで表示 </div>
+				<div class="col-lg-3 visible-lg"> LGで表示 </div>
+				<div class="col-lg-3 visible-lg"> LGで表示 </div>
+				<div class="col-lg-3 visible-lg"> LGで表示 </div>
+				<div class="col-lg-3 visible-lg"> LGで表示 </div>
+			</div>
+		</div>
+		<br/>
+		入れ子にしてみる(なんか、全ケース考えるとすごく難しくなる気が・・・)
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-4">
+							ほげ
+						</div>
+						<div class="col-md-4">
+							ぴよ
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-1">
+							ho
+						</div>
+						<div class="col-md-3">
+							ほげほげ
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					あああああ
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

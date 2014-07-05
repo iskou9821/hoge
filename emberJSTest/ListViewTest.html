@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Ember-List-Viewのテスト</title>
+
+		<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<script src="./bower_components/jquery/dist/jquery.js"></script>
+		<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		
+		<script src="./bower_components/handlebars/handlebars.js"></script>
+		<script src="./bower_components/ember/ember.js"></script>
+		<script src="./bower_components/ember-data/ember-data.js"></script>
+		<script src="./bower_components/ember-list-view/list-view.js"></script>
+		
+		<script type="text/javascript">
+			$(function(){
+				window.App = Ember.Application.create();
+								
+				App.IndexRoute = Ember.Route.extend({
+					model : function(params){
+						var items =[];
+						for (i = 0; i <10000; i++) {
+							items.push( { hoge: "hoge-hoge:" + i });
+						}
+						return items;
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<script type='text/x-handlebars' data-template-name='index'>
+			{{!--
+			<ul>
+			{{#each}}
+				<li>{{hoge}}</li>
+			{{/each}}
+			</ul>
+			--}}
+			
+			{{#collection Ember.ListView contentBinding="controller" height=500 rowHeight=10 width=500}}
+				{{hoge}}
+			{{/collection}}
+		</script>
+	</body>
+</html>
