@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  	<meta charset="utf-8">
+    <title>EmberJS+Jerseyのテスト</title>
+    
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="./bower_components/jquery/dist/jquery.js"></script>
+    <script src="./bower_components/handlebars/handlebars.js"></script>
+    <script src="./bower_components/ember/ember.js"></script>
+    <script src="./bower_components/ember-data/ember-data.js"></script>
+    <script src="./bower_components/ember-list-view/list-view.js"></script>
+    
+    <!-- EmberJSの初期化 -->
+    <script src="./js/emberApp.js"></script
+
+	<!-- Modelの登録 -->
+    <script src="./js/model/Hoge.js"></script>
+    
+    <style type="text/css">
+    	div.elem {
+    		padding-left:20px
+    	}
+    	div.info {
+    		display: none;
+    		position:absolute;
+    		width:300px;
+    	}
+    </style>
+    
+    <script type="text/javascript">
+    $(function(){
+    	App.IndexController = Ember.ArrayController.extend({
+    		actions : {
+    			doAdd : function(){
+    				var hoge = this.store.createRecord('hoge', 
+    						{ msg1:this.get('msg1'), msg2:this.get('msg2'), num1:this.get('num1') });
+    				var that = this;
+    				hoge.save().then(function(){ //save()の返り値はpromise
+    					//再読み込み
+    					that.set('model', that.store.find('hoge'));
+    				});
+    			},
+    			doMod : function(hoge) {
+    				//updateは結果がボタン押した時の反応が少ないので、ダイアログを表示しておく。
+					hoge.save().then(function(){
+						$("#info").text("更新しました").fadeIn('fast');
+						setTimeout(function(){ $("#info").fadeOut(); }, 500);
+					});
+    			},
+    			doDel : function(hoge) {
+    				hoge.deleteRecord();
+    				hoge.save();
+    			},
+    			doReload : function() {
+    				//再読み込み
+    				this.set('model', this.store.find('hoge'));
+    			},
+    			doRead : function() {
+    				var p = this.store.find('hoge', this.get('readTargetId'));
+    				var that = this;
+    				p.then(function() {
+    					that.set('divMsg1', p.get('msg1'));
+    					that.set('divMsg2', p.get('msg2'));
+    					that.set('divNum1', p.get('num1'));
+    				});
+    			}
+    		},
+    		msg1:'hello',
+    		msg2:'world',
+    		num1:100,
+    		readTargetId : 1,
+    		divMsg1:'',
+    		divMag1:'',
+    		divNum1:0
+    	});
+    	
+    	App.IndexRoute = Ember.Route.extend({
+    		model : function() {
+    			return this.store.find('hoge',
+    				//リクエストパラメータ(サーバ側ではデバッグ表示するだけで、特に使っていない)
+    				{ cond1:'hoge', cond2:'piyo', cond3:'fuga' });
+    		}
+    	});
+    });
+    </script>
+  </head>
+  <body>
+  	
+    <h2>ember-dataでCRUDっぽいもの。</h2>
+    
+    <div>
+    	<script type="text/x-handlebars" data-template-name="index">
+    		<h3>リロード</h3>
+    		<div class="elem">
+    			<button {{action doReload}}>reload</button>
+    		</div>
+    		<br/>
+    		<h3>データリスト</h3>
+    		<div id="info" class="alert alert-info info"></div>
+    		<div class="elem">
+    		<table>
+    			<tr>
+    				<th>ID</th>
+    				<th>メッセージ1</th>
+    				<th>メッセージ2</th>
+    				<th>数値1</th>
+    				<th>更新</th>
+    				<th>削除</th>
+    			</tr>
+    			{{#each hoge in model}}
+    				<tr>
+    					<td style="text-align:center">
+    						{{hoge.id}}
+    					</td>
+    					<td>
+    						{{input value=hoge.msg1}}
+    					</td>
+    					<td>
+    						{{input value=hoge.msg2}}
+    					</td>
+    					<td>
+    						{{input value=hoge.num1}}
+    					</td>
+    					<td>
+    						<button {{action doMod hoge}}>upd</button>
+    					</td>
+    					<td>
+    						<button {{action doDel hoge}}>del</button>
+    					</td>
+    				</tr>
+    			{{/each}}
+    		</table>
+    		</div>
+    		<br/>
+    		
+    		<h3>新規追加</h3>
+    		<div class="elem">
+    			<div>メッセージ1{{input value=msg1}}</div>
+    			<div>メッセージ2{{input value=msg2}}</div>
+    			<div>数値{{input value=num1}}</div>
+    			<div>
+    				<button {{action doAdd}}>追加します</button>
+    			</div>
+    		</div>
+    		<br/>
+    		
+    		<h3>単一データ読み込み</h3>
+    		<div class="elem">
+    			<div>
+    				対象のID:{{input value=readTargetId}}
+    				<button {{action doRead}}>読み込み</button>
+    			</div>
+    			<br/>
+    			[読み込み結果]
+    			<div class="elem">
+    				<div>メッセージ1：{{divMsg1}}</div>
+    				<div>メッセージ2：{{divMsg2}}</div>
+    				<div>数値：{{divNum1}}</div>
+    			</div>
+    		</div>
+    	</script>
+    </div>
+  </body>
+</html>
