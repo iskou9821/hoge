@@ -13,35 +13,97 @@
 		<script src="./bower_components/ember-data/ember-data.js"></script>
 		<script src="./bower_components/ember-list-view/list-view.js"></script>
 		
+		<!-- Emberの初期化と固定データの生成を別ファイルにした。 -->
+		<script src="./js/GridTest01.js"></script>
+				
 		<script type="text/javascript">
 			$(function(){
-				window.App = Ember.Application.create();
+				//繰り返しの中で使うItemController
+				App.SubItemsController = Ember.ObjectController.extend({
+					subItems : function(){
+						var id = this.get('id');
+						console.log('subItem parent id=' + id); //RESTAdapterのときは、これをキーにSubItemを取得する。
+						return this.store.find('testSubItem');
+					}.property('id')
+				});
+				
+				App.IndexController = Ember.ArrayController.extend({
+					itemController : 'sub-items'
+				});
+				
+				//コンポーネントの生成
+				App.ShowTestItemComponent = Ember.Component.extend({
+				});
 								
 				App.IndexRoute = Ember.Route.extend({
 					model : function(params){
-						var items =[];
-						for (i = 0; i <10000; i++) {
-							items.push( { hoge: "hoge-hoge:" + i });
-						}
-						return items;
+						return this.store.find('testItem');
 					}
 				});
 			});
 		</script>
 	</head>
 	<body>
+		<h3>テスト内容</h3>
+		<div>
+		<ul>
+			<li>リスト表示</li>
+			<li>Ember-List-View</li>
+			<li>ネストされたリスト</li>
+			<li>ember-dataにデータ取得のチェイン</li>			
+		</ul>
+		</div>
+		
+		<!-- 
+			[コンポーネント名の表記ルールに注意が必要]
+			コンポーネントの宣言: ShowTestItemComponent
+			テンプレートのid : components/show-test-item
+			呼び出し時の指定: {{show-test-item}}
+		 -->
+		<script type='text/x-handlebars' id='components/show-test-item'>
+			<div class="row">
+				<div class="col-md-6">
+				名称:{{name}}
+				</div>
+				<div class="col-md-6">
+				{{caption}}
+				</div>			
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					{{text}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					{{#each subItems}}
+						<div style="border-style:solid;width:100px;float:left;margin-left:10px;">
+							{{caption}}
+						</div>
+					{{/each}}
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</script>
+	
 		<script type='text/x-handlebars' data-template-name='index'>
+			{{!-- eachによる表示 --}}
 			{{!--
 			<ul>
-			{{#each}}
-				<li>{{hoge}}</li>
+			{{#each itemController='sub-items'}}
+				<li>
+				{{show-test-item id=id name=name caption=caption text=text subItems=subItems}}
+				</li>
 			{{/each}}
 			</ul>
 			--}}
 			
-			{{#collection Ember.ListView contentBinding="controller" height=500 rowHeight=10 width=500}}
-				{{hoge}}
+			{{!-- Ember-List-Viewによる表示。一応動くけど、表示が乱れたりとかちょっと動きが怪しい・・・ --}}
+			<div class="container">
+			{{#collection Ember.ListView contentBinding="controller" height=500 rowHeight=300 width=800}}
+				{{show-test-item id=id name=name caption=caption text=text subItems=subItems}}
 			{{/collection}}
+			</div>
 		</script>
 	</body>
 </html>
