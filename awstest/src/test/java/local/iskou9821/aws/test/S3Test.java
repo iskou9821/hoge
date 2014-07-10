@@ -100,7 +100,7 @@ public class S3Test extends AbsAWSTest {
 	/*
 	 * S3に保存しているファイルの一覧を取得
 	 */
-	public void testList2() throws Exception {
+	public void testList() throws Exception {
 		AmazonS3Client client = makeClient();
 		ObjectListing list = client.listObjects(bucketName);
 		
