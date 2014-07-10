@@ -1,0 +1,8 @@
+#AWS Access Key
+accessKey=
+
+#AWS Secret Access Key
+secretKey=
+
+#Target bucket name
+bucketName=
