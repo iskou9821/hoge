@@ -18,9 +18,17 @@
 				//プロパティ
 				hoge : 'ほげほげ',
 				hoges:[
-					{name : 'ほげ', value : 'hoge-hoge'},
-					{name : 'ぴよ', value : 'piyo-piyo'},
+					{name : 'ほげ',
+					 value : 'hoge-hoge',
+					 data : '「｛　」3つで括ったときも<br/>HTMLタグはエスケープされない'},
+					{name : 'ぴよ',
+					 value : 'piyo-piyo',
+					 data : 'piyopiyo<br/>piyopiyo'},
 				],
+				piyo : '<span style="font-weight:bold">ぴよ</span>',
+				piyopiyo : function() {
+				    return this.get('piyo').htmlSafe();
+				}.property('html'),
 				clickedElem:'',
 				
 				//イベント
@@ -44,9 +52,12 @@
 	<body>
 		<script type='text/x-handlebars' data-template-name='hoge'>
 			<div>シンプルな値の埋め込み。</div>
-			<div>{{view.hoge}}</div>
+			    <div>{{view.hoge}}</div>
 			<br/>
-			
+			<div>プロパティに含まれるHTMLタグをエスケープする・しない</div>
+			    <div>{{view.piyo}}</div>
+                <div>{{view.piyopiyo}}</div>
+			<br/>
 			<div>繰り返し</div>
 			<div>
 				<table border>
@@ -54,6 +65,9 @@
 					<tr>
 						<td>{{name}}</td>
 						<td>{{value}}</td>
+						
+						{{!-- データ中に含まれるHTMLタグを無視しないようにするには、「｛」3つで括る --}}
+						<td>{{{data}}}</td>
 					</tr>
 					{{/each}}
 				<table>
