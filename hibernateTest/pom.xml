@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>local.iskou9821.rest.sample</groupId>
-  <artifactId>jersey-test</artifactId>
+  <groupId>local.iskou9821.jpa</groupId>
+  <artifactId>hibernate-test</artifactId>
   <packaging>jar</packaging>
   <version>0.0.1</version>
   <name>${project.artifactId}</name>
@@ -65,45 +65,49 @@
     </plugins>
   </build>
  
-  <dependencies>
-    <!-- Test -->
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.11</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>servlet-api</artifactId>
-		<version>2.5</version>
-		<scope>provided</scope>
-    </dependency>    
+  <properties>
+      <hibernate.version>4.3.5.Final</hibernate.version>
+  </properties>
  
-    <!-- Main -->
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-core</artifactId>
-      <version>1.18.1</version>
-    </dependency>
+  <dependencies>
+      <!-- Test -->
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.11</version>
+          <scope>test</scope>
+      </dependency>
 
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-server</artifactId>
-      <version>1.18.1</version>
-    </dependency>
+      <!-- main -->
+      <dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-entitymanager</artifactId>
+	      <version>${hibernate.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-ehcache</artifactId>
+          <version>${hibernate.version}</version>
+      </dependency>
 
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-json</artifactId>
-      <version>1.18.1</version>
-    </dependency>
-    
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-servlet</artifactId>
-      <version>1.18.1</version>
-    </dependency>
+     <!-- util -->
+      <dependency>
+       	 <groupId>com.google.guava</groupId>
+	     <artifactId>guava</artifactId>
+	     <version>17.0</version>
+      </dependency>
+
+      <!-- jdbc -->
+      <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+          <version>1.4.178</version>
+      </dependency>
+      <dependency>
+	      <groupId>mysql</groupId>
+	      <artifactId>mysql-connector-java</artifactId>
+	      <version>5.1.31</version>
+      </dependency>
   </dependencies>
 
 </project>
